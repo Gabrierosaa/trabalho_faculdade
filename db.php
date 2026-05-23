@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+$availableDrivers = PDO::getAvailableDrivers();
+
+if (!in_array('sqlite', $availableDrivers, true)) {
+    throw new RuntimeException(
+        'Driver SQLite nao encontrado no PHP. Habilite as extensoes pdo_sqlite e sqlite3 no php.ini antes de executar o projeto.'
+    );
+}
+
 $pdo = new PDO('sqlite:' . __DIR__ . '/database.sqlite');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
