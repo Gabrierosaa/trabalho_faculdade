@@ -26,6 +26,28 @@ php -S localhost:8000
 
 - http://localhost:8000/index.php
 
+## Instalacao automatica (Windows)
+
+Se preferir, rode o instalador que prepara o ambiente automaticamente (instala PHP via winget quando necessario e valida SQLite):
+
+PowerShell:
+
+```powershell
+./scripts/install.ps1
+```
+
+CMD:
+
+```bat
+scripts\install.bat
+```
+
+Para instalar e ja iniciar o servidor:
+
+```powershell
+./scripts/install.ps1 -StartServer
+```
+
 ## Se SQLite nao estiver habilitado
 
 Voce pode tentar iniciar usando o `php.ini` local do projeto:
