@@ -9,12 +9,27 @@ if (-not $phpCheck) {
     exit 1
 }
 
-$url = "http://localhost:$Port/index.php"
+$phpDir = Split-Path -Parent $phpCheck.Source
+$phpExtDir = Join-Path $phpDir "ext"
+
+if (-not (Test-Path $phpExtDir)) {
+    Write-Error "Diretorio de extensoes nao encontrado: $phpExtDir"
+    exit 1
+}
+
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$projectRoot = Resolve-Path (Join-Path $scriptDir "..")
+
+$url = "http://localhost:$Port/"
 Write-Host "Iniciando servidor em $url"
 Write-Host "Pressione Ctrl+C para parar."
 
+Push-Location $projectRoot
+
 if ($UseLocalPhpIni) {
-    php -c . -S "localhost:$Port"
+    php -c . -d "extension_dir=$phpExtDir" -S "localhost:$Port" -t .
 } else {
-    php -S "localhost:$Port"
+    php -S "localhost:$Port" -t .
 }
+
+Pop-Location
